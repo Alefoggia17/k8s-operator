@@ -1,0 +1,17 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: scaler-operator-controller-manager-role
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "nodes", "configmaps"]
+    verbs: ["list", "watch", "create", "delete", "update"]
+  - apiGroups: ["apps"]
+    resources: ["deployments", "replicasets", "statefulsets", "daemonsets"]
+    verbs: ["list", "watch", "create", "delete", "update"]
+  - apiGroups: ["batch"]
+    resources: ["jobs"]
+    verbs: ["list", "watch", "create", "delete", "update"]
+  - apiGroups: ["scaler.local"]  # Permessi per scalers nel gruppo scaler.local
+    resources: ["scalers"]  # Risorsa scaler
+    verbs: ["list", "watch", "create", "delete", "update"]

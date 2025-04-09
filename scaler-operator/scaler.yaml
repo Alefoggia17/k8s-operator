@@ -1,0 +1,7 @@
+apiVersion: scaler.local/v1
+kind: Scaler
+metadata:
+  name: my-scaler
+  namespace: scaler-operator-system
+spec:
+  prometheusUrl: "http://192.168.56.11:30000"
