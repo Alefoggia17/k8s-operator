@@ -1,0 +1,129 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: scaler-operator-controller-manager-role
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "nodes", "configmaps"]
+    verbs: ["list", "watch", "create", "delete", "update"]
+  - apiGroups: ["apps"]
+    resources: ["deployments", "replicasets", "statefulsets", "daemonsets"]
+    verbs: ["list", "watch", "create", "delete", "update"]
+  - apiGroups: ["batch"]
+    resources: ["jobs"]
+    verbs: ["list", "watch", "create", "delete", "update"]
+  - apiGroups: ["scaler.local"]  # Aggiungi questa parte per consentire l'accesso a scaler.local
+    resources: ["scalers/status"]  # Permessi per lo stato dei "scalers"
+    verbs: ["update"]  # Consenti l'aggiornamento dello stato
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: scaler-operator-controller-manager-binding
+rules:
+  - apiGroups: [""]
+    resources: ["nodes", "configmaps"]
+    verbs: ["list", "watch"]
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["list", "watch"]  # Add permissions for pods
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: scaler-operator-controller-manager-binding
+subjects:
+  - kind: ServiceAccount
+    name: scaler-operator-controller-manager
+    namespace: scaler-operator-system
+roleRef:
+  kind: ClusterRole
+  name: scaler-operator-controller-manager-role
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    control-plane: controller-manager
+    app.kubernetes.io/name: scaler-operator
+    app.kubernetes.io/managed-by: kustomize
+  name: system
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: controller-manager
+  namespace: system
+  labels:
+    control-plane: controller-manager
+    app.kubernetes.io/name: scaler-operator
+    app.kubernetes.io/managed-by: kustomize
+spec:
+  selector:
+    matchLabels:
+      control-plane: controller-manager
+      app.kubernetes.io/name: scaler-operator
+  replicas: 1
+  template:
+    metadata:
+      annotations:
+        kubectl.kubernetes.io/default-container: manager
+      labels:
+        control-plane: controller-manager
+        app.kubernetes.io/name: scaler-operator
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - command:
+            - /manager
+          args:
+            - --leader-elect
+            - --health-probe-bind-address=:8081
+          image: carputopietro/scaler-metrics:latest  # Cambia con l'immagine corretta del tuo operatore
+          name: manager
+          ports: []
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "ALL"
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8081
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: 8081
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          resources:
+            limits:
+              cpu: 500m
+              memory: 128Mi
+            requests:
+              cpu: 10m
+              memory: 64Mi
+          env:
+            - name: PROMETHEUS_URL
+              value: "http://192.168.56.11:30000"  # Indirizzo di Prometheus
+            - name: MYSQL_USER
+              value: "remote_user"  # Nome utente MySQL
+            - name: MYSQL_PASSWORD
+              value: "password"  # Password fissa
+            - name: MYSQL_HOST
+              value: "192.168.56.11"  # Indirizzo MySQL
+            - name: MYSQL_PORT
+              value: "3306"  # Porta MySQL
+            - name: MYSQL_DATABASE
+              value: "metricsdb"  # Nome del database
+          volumeMounts: []
+      volumes: []
+      serviceAccountName: controller-manager
+      terminationGracePeriodSeconds: 10

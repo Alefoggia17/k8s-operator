@@ -1,0 +1,9 @@
+apiVersion: scaler.local/v1
+kind: Scaler
+metadata:
+  labels:
+    app.kubernetes.io/name: scaler-operator
+    app.kubernetes.io/managed-by: kustomize
+  name: scaler-sample
+spec:
+  # TODO(user): Add fields here
