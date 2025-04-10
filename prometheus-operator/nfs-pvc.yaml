@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: prometheus-db-pvc
+  namespace: prometheus-operator-system  # Sostituisci con il tuo namespace
+spec:
+  accessModes:
+    - ReadWriteMany  # Modalità di accesso che corrisponde al PV
+  resources:
+    requests:
+      storage: 1Gi  # Richiesta di 1Gi di spazio
+  storageClassName: "manual"  # Specifica la StorageClass, se necessaria

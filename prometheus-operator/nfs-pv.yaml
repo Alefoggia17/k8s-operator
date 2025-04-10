@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: prometheus-db-pv
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany  # Modalità di accesso per più pod
+  persistentVolumeReclaimPolicy: Retain  # Conserva il volume dopo la rimozione del PVC
+  storageClassName: manual  # Aggiungi questa riga
+  nfs:
+    path: /home/vagrant/prometheus-operator  # Percorso della directory esportata
+    server: 192.168.56.11  # Sostituisci con l'IP del server NFS

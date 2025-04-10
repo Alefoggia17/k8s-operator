@@ -1,0 +1,19 @@
+apiVersion: metrics.local/v1
+kind: MetricsCollector
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"metrics.local/v1","kind":"MetricsCollector","metadata":{"annotations":{},"labels":{"app.kubernetes.io/managed-by":"kustomize","app.kubernetes.io/name":"prometheus-operator"},"name":"metricscollector-sample","namespace":"default"},"spec":{"csvFilePath":"/home/vagrant/prometheus-operator/db.csv","prometheusUrl":"http://192.168.56.11:30000"}}
+  creationTimestamp: "2025-02-23T14:25:04Z"
+  generation: 1
+  labels:
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/name: prometheus-operator
+  name: metricscollector-sample
+  namespace: default
+  resourceVersion: "39420"
+  uid: 78b7da87-4f01-421e-8734-0ae5189529dd
+spec:
+  csvFilePath: /home/vagrant/prometheus-operator/db.csv
+  prometheusUrl: http://192.168.56.11:30000
+status: {}
