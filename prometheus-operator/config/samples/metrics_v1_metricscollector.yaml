@@ -1,0 +1,12 @@
+apiVersion: metrics.local/v1
+kind: MetricsCollector
+metadata:
+  labels:
+    app.kubernetes.io/name: prometheus-operator
+    app.kubernetes.io/managed-by: kustomize
+  name: metricscollector-sample
+spec:
+  # TODO(user): Add fields here
+  prometheusUrl: "http://192.168.56.11:30000"
+  csvFilePath: "/home/vagrant/prometheus-operator/db.csv"
+

@@ -1,0 +1,4 @@
+## Append samples of your project ##
+resources:
+- metrics_v1_metricscollector.yaml
+# +kubebuilder:scaffold:manifestskustomizesamples
