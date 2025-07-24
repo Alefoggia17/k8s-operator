@@ -27,3 +27,8 @@ To run the script:
 
 ```sh
 bash create_vms.sh
+
+```
+## 2. Follow instructions
+
+Please, follow the istructions in `prometheus-operator/README.md` and `scaler-operator/README.md` and read the PDF file.
