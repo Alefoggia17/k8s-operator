@@ -1,8 +1,8 @@
 # scaler-operator
-// TODO(user): Add simple overview of use/purpose
+TODO(user): Add simple overview of use/purpose
 
 ## Description
-// TODO(user): An in-depth paragraph about your project and overview of use
+TODO(user): An in-depth paragraph about your project and overview of use
 
 ## Getting Started
 
@@ -111,7 +111,7 @@ previously added to 'dist/chart/values.yaml' or 'dist/chart/manager/manager.yaml
 is manually re-applied afterwards.
 
 ## Contributing
-// TODO(user): Add detailed information on how you would like others to contribute to this project
+TODO(user): Add detailed information on how you would like others to contribute to this project
 
 **NOTE:** Run `make help` for more information on all potential `make` targets
 
