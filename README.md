@@ -7,7 +7,7 @@ A utility for provisioning ARM64 virtual machines using `libvirt`/`KVM` and depl
 This project combines virtual infrastructure setup through a `bash` script with automated deployment of Kubernetes operators (e.g., `scaler-operator`, `prometheus-operator`). It is designed to run ARM64-based virtual machines—ideal for edge computing or Kubernetes testing scenarios—using Ubuntu 20.04 cloud images and integrates them into a cluster environment.
 Additionally, this project includes evaluating application time series (metrics such as CPU or memory consumption) for proactively assessing load spikes.
 
-## Prerequisites for k8s-operator
+### Prerequisites for k8s-operator
 
 - `virt-install`, `qemu-img`, `libvirt`, `virsh`
 - `wget`, `bash`, `qemu-utils`
