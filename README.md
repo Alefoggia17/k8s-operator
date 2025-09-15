@@ -37,6 +37,7 @@ Please, follow the istructions in `prometheus-operator/README.md` and `scaler-op
 
 In `TimeSeriesForecasting` directory, there are several **.py** and **.ipynb** files. These files are used to create the datasets for training the **CONV + LSTM** model. You can use the functions in the `functions.py` file to reproduce the various datasets. Once this is done, you need to use the `tsf.py` file to implement time series forecasting.
 
+In the `.ipynb` files you can run everything directly, changing the relative paths.
 
 
 
